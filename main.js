@@ -241,8 +241,8 @@
 
     async function scene2(rid) {
       STATE.ux = UX_PROFILE.default;
-      await wait(500); await typeText("t2_1", "Não te deram espaço.", null, rid);
-      await wait(300); await typeText("t2_2", "Você tomou.", null, rid);
+      await wait(500); await typeText("t2_1", "Não foi concedido.", null, rid);
+      await wait(300); await typeText("t2_2", "Foi construído.", null, rid);
       await wait(600); revealActions("s2");
     }
 
@@ -638,4 +638,5 @@
     // test
     // test
     // test
+
 
