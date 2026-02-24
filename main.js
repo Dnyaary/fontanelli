@@ -26,28 +26,28 @@
         s5_1: "Não é sobre falar bonito.",
         s5_2: "É sobre falar mesmo quando tentam te calar.",
         s6_1: "Não pra te dar parabéns.",
-        s6_2: "Pra lembrar que a sua voz não é favor.\nE que segurar isso custa.",
+        s6_2: "Pra lembrar que a sua voz não é favor.\nE calar nunca foi neutro.",
         word: "Presente."
       },
       "tempo": {
         s5_1: "Não é sobre dar conta de tudo.",
         s5_2: "É sobre alguém parar de tomar o seu tempo como se fosse infinito.",
         s6_1: "Não pra te dar parabéns.",
-        s6_2: "Pra lembrar que seu tempo é seu.\nE que existir assim custa.",
+        s6_2: "Pra lembrar que seu tempo não é sobra.\nE devolvê-lo a você muda tudo.",
         word: "Ainda aqui."
       },
       "corpo": {
         s5_1: "Não é sobre opinião.",
         s5_2: "É sobre limite. Sobre respeito. Sobre ser sua.",
         s6_1: "Não pra te dar parabéns.",
-        s6_2: "Pra lembrar que seu corpo não é debate.\nE que existir assim custa.",
+        s6_2: "Pra lembrar que seu corpo não é debate.\nE respeito não é concessão.",
         word: "Inteira."
       },
       "sanidade": {
         s5_1: "Não é sobre ser forte o tempo todo.",
         s5_2: "É sobre não desabar quando ninguém vê — e ainda continuar.",
         s6_1: "Não pra te dar parabéns.",
-        s6_2: "Pra lembrar que você não precisa provar nada.\nE que existir assim custa.",
+        s6_2: "Pra lembrar que você não precisa provar nada.\nE permanecer inteira já é suficiente.",
         word: "Permanece."
       }
     };
@@ -638,5 +638,6 @@
     // test
     // test
     // test
+
 
 
