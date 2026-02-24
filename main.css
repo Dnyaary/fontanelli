@@ -1,0 +1,251 @@
+    :root {
+      --bg: #0f0d0c;
+      --text: #e8e6e3;
+      --text-dim: #fdf6ec;
+      
+      --accent: #c4553d;
+      --accent-dim: rgba(196,85,61,0.4);
+      --overlay-color: rgba(15,13,12,0.25); 
+      --vid-filter: contrast(1.1) saturate(0.8) brightness(1.1); 
+      
+      --line: rgba(255,245,235,0.12);
+      --radius: 12px;
+      --max-w: 580px;
+      
+      --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+      --ease-in: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    }
+
+    /* clima por escolha */
+    :root[data-route="voz"] {
+      --accent: #d49a6a; 
+      --overlay-color: rgba(25, 18, 12, 0.3);
+      --vid-filter: contrast(1.05) saturate(0.6) brightness(1.1) blur(1px);
+    }
+    :root[data-route="tempo"] {
+      --accent: #6b8e8f; 
+      --overlay-color: rgba(10, 14, 16, 0.4);
+      --vid-filter: contrast(1.2) saturate(0.3) brightness(0.9);
+    }
+    :root[data-route="corpo"] {
+      --accent: #8a3a3a; 
+      --overlay-color: rgba(20, 5, 5, 0.4);
+      --vid-filter: contrast(1.3) saturate(1.1) brightness(0.85);
+    }
+    :root[data-route="sanidade"] {
+      --accent: #9a8c98; 
+      --overlay-color: rgba(15, 12, 18, 0.35);
+      --vid-filter: contrast(0.9) saturate(0.4) brightness(1.0) blur(3px);
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    
+    html, body {
+      margin: 0; padding: 0;
+      width: 100%;
+      min-height: 100dvh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* pra 2 videos */
+    .bg-video-wrap {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      background: #0f0d0c;
+    }
+    
+    .bg-video-wrap video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      z-index: 0;
+      /*  a transição aqui é pelo js */
+    }
+
+    .bg-video-wrap video.active { 
+      opacity: 1; 
+      z-index: 1;
+      filter: var(--vid-filter);
+      transition: filter 2s var(--ease-out), opacity 1.5s ease-in-out;
+    }
+    
+    .bg-video-wrap video.inactive { 
+      opacity: 0; 
+      z-index: 0;
+      filter: none;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, var(--overlay-color) 0%, var(--bg) 90%);
+      z-index: 2;
+      pointer-events: none;
+      transition: background 2s var(--ease-out);
+    }
+
+    .grain {
+      position: fixed;
+      inset: 0;
+      z-index: 3;
+      opacity: 0.07;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* o game feel */
+    :root[data-impact="true"] .bg-video-wrap video.active {
+      transition: filter 0.1s ease-out;
+    }
+    :root[data-impact="recover"] .bg-video-wrap video.active {
+      transition: filter 1.5s ease-in;
+    }
+
+    /* main UI 4 */
+    .app {
+      position: relative;
+      z-index: 10;
+      width: min(90vw, var(--max-w));
+      padding: 20px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 300px;
+    }
+
+    h1 {
+      font-family: 'Lora', serif;
+      font-weight: 500;
+      font-size: clamp(28px, 6vw, 42px);
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin: 0 0 24px 0;
+      color: var(--text);
+      will-change: opacity, transform;
+    }
+    h1 em { font-style: italic; color: var(--text-dim); font-weight: 400; }
+
+    .typewriter {
+      font-size: clamp(16px, 3vw, 18px);
+      line-height: 1.6;
+      min-height: 1.6em;
+      white-space: pre-wrap;
+      margin-bottom: 8px;
+    }
+    .text-dim { color: var(--text-dim); }
+
+    .cursor::after {
+      content: ""; display: inline-block; width: 2px; height: 1.1em;
+      background: var(--accent); margin-left: 4px; vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .divider {
+      width: 40px; height: 1px; background: var(--accent); opacity: 0.6;
+      margin: 0 0 24px 0; transition: background 1s ease;
+    }
+
+    .actions {
+      margin-top: 40px; display: flex; gap: 16px; opacity: 0;
+      transform: translateY(10px); transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+      pointer-events: none;
+    }
+    .actions.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+    button {
+      background: rgba(255,255,255,0.03); border: 1px solid var(--line); color: var(--text);
+      padding: 14px 24px; font-family: 'Inter', sans-serif; font-size: 14px;
+      letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer;
+      transition: all 0.3s ease; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    }
+    @supports not (backdrop-filter: blur(4px)) {
+      button { background: rgba(255,255,255,0.06); }
+    }
+    button:hover { background: rgba(255,255,255,0.08); border-color: var(--accent); }
+    button:active { transform: scale(0.98); }
+    button.ghost { background: transparent; border: none; opacity: 0.6; padding: 14px 10px; }
+    button.ghost:hover { opacity: 1; background: transparent; }
+
+    .choice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+    .choice-btn { text-align: left; font-family: 'Lora', serif; font-style: italic; font-size: 16px; padding: 20px; opacity: 0; transform: translateY(10px); transition: background 0.3s ease, border-color 0.3s ease; touch-action: none; user-select: none; }
+    @media (max-width: 500px) { .choice-grid { grid-template-columns: 1fr; } }
+
+    .screen { display: none; opacity: 0; transform: translateY(15px) scale(0.98); transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out); }
+    .screen.active { display: block; }
+    .screen.visible { opacity: 1; transform: translateY(0) scale(1); }
+    .screen.exit { opacity: 0; transform: translateY(-10px); transition: opacity 0.4s var(--ease-in), transform 0.4s var(--ease-in); }
+
+    #silence-overlay { position: fixed; inset: 0; background: var(--bg); z-index: 50; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 1s ease; }
+    #silence-overlay.active { opacity: 1; pointer-events: auto; }
+    
+    .breath-line { width: 0; height: 1px; background: var(--accent); box-shadow: 0 0 10px var(--accent); transition: background 1s ease, box-shadow 1s ease; }
+
+    .final-word { font-family: 'Lora', serif; font-size: clamp(40px, 8vw, 64px); font-weight: 700; color: var(--accent); display: block; margin-top: 20px; opacity: 0; filter: blur(8px); transform: scale(0.9); transition: all 1.5s cubic-bezier(0.22, 1, 0.36, 1); }
+    .final-word.reveal { opacity: 1; filter: blur(0); transform: scale(1); }
+
+    .footer { margin-top: 60px; border-top: 1px solid var(--line); padding-top: 20px; display: flex; justify-content: space-between; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); opacity: 0; transition: opacity 1s ease; }
+    .footer.visible { opacity: 1; }
+
+    .site-credit {
+    position: fixed;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 20;
+    opacity: 0.5;
+    transition: opacity 0.4s ease;
+    }
+
+    .site-credit:hover {
+    opacity: 0.9;
+    }
+
+    .credit-main {
+    font-family: 'Lora', serif;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+    }
+
+    .credit-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    }
+
+    .credit-author {
+    font-family: 'Inter', sans-serif;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    margin-top: 4px;
+    opacity: 0.6;
+    }
+
+    .site-credit a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease, color 0.3s ease;
+    }
+
+    .site-credit a:hover {
+    border-bottom: 1px solid var(--accent);
+    color: var(--text);
+    }
