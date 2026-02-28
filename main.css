@@ -1,0 +1,182 @@
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Share Tech Mono', monospace;
+            background: radial-gradient(circle at center, #2a0505 0%, #0d0303 60%, #000000 100%);
+            color: #ff4444;
+            cursor: crosshair;
+        }
+
+        body::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 10;
+            background-size: 100% 3px, 3px 100%;
+            pointer-events: none;
+        }
+        body::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+            opacity: 0.03;
+            z-index: 11;
+            pointer-events: none;
+        }
+
+        #waveCanvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            filter: blur(1px);
+        }
+
+        #content {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+            text-align: center;
+            width: 90%;
+            max-width: 900px;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            transition: transform 0.1s ease-out;
+        }
+
+        .message-line {
+            font-size: 3rem;
+            letter-spacing: 0.1em;
+            line-height: 1.3;
+            text-transform: uppercase;
+            margin: 0.5rem 0;
+            position: relative;
+        }
+
+        .glitch-target {
+            position: relative;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .glitch-target::before,
+        .glitch-target::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+        }
+
+        .glitch-target::before {
+            left: 2px;
+            text-shadow: -2px 0 #00ffff;
+            clip: rect(44px, 900px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+
+        .glitch-target::after {
+            left: -2px;
+            text-shadow: -2px 0 #ff00ff;
+            clip: rect(44px, 900px, 56px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% { clip: rect(10px, 9999px, 83px, 0); }
+            20% { clip: rect(66px, 9999px, 20px, 0); }
+            40% { clip: rect(15px, 9999px, 98px, 0); }
+            60% { clip: rect(81px, 9999px, 3px, 0); }
+            80% { clip: rect(32px, 9999px, 54px, 0); }
+            100% { clip: rect(98px, 9999px, 12px, 0); }
+        }
+
+        @keyframes glitch-anim2 {
+            0% { clip: rect(65px, 9999px, 100px, 0); }
+            20% { clip: rect(12px, 9999px, 54px, 0); }
+            40% { clip: rect(87px, 9999px, 12px, 0); }
+            60% { clip: rect(34px, 9999px, 65px, 0); }
+            80% { clip: rect(9px, 9999px, 88px, 0); }
+            100% { clip: rect(53px, 9999px, 22px, 0); }
+        }
+
+        .separator {
+            margin: 2rem auto;
+            height: 2px;
+            width: 80%;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 10px,
+                #ff4444 10px,
+                #ff4444 20px
+            );
+            opacity: 0.4;
+        }
+
+        .council-line {
+            font-size: 1.2rem;
+            letter-spacing: 0.2em;
+            color: #cc3333;
+            margin: 1.5rem 0;
+            opacity: 0.8;
+            animation: blink 4s infinite;
+        }
+
+        @keyframes blink {
+            0%, 96%, 98% { opacity: 0.8; }
+            97%, 99% { opacity: 0.1; }
+        }
+
+        .question-line {
+            font-size: 1.2rem;
+            letter-spacing: 0.1em;
+            color: #884444;
+            margin-top: 3rem;
+            opacity: 0.9;
+            height: 2rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .question-line span {
+            color: #fff;
+            background: #ff4444;
+            padding: 0 5px;
+            animation: pulseBg 2s infinite;
+        }
+
+        @keyframes pulseBg {
+            0%, 100% { background-color: #ff4444; color: #fff; text-shadow: none; }
+            50% { background-color: transparent; color: #ff4444; text-shadow: 0 0 10px #ff4444; }
+        }
+
+        #footer {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            color: #552222;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .message-line { font-size: 1.8rem; }
+            .council-line { font-size: 0.9rem; }
+            .question-line { font-size: 1rem; }
+        }
